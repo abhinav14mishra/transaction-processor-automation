@@ -1,0 +1,47 @@
+name: Destroy ABC Startup Infrastructure
+
+# ----------------------------------------
+# MANUAL trigger only
+# Destructive action – never automated
+# ----------------------------------------
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+
+    steps:
+      # -----------------------------------
+      # Checkout repository
+      # -----------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # -----------------------------------
+      # Authenticate to AWS using OIDC
+      # -----------------------------------
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::165742852730:role/GitHubActions-IaC-Deployer
+          aws-region: ap-south-1
+
+      # -----------------------------------
+      # Install Terraform CLI
+      # -----------------------------------
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # -----------------------------------
+      # Destroy infrastructure
+      # -----------------------------------
+      - name: Terraform Destroy
+        run: |
+          terraform init -input=false
+          terraform destroy -auto-approve
