@@ -39,6 +39,9 @@ The system utilizes an **event-driven state machine** to manage the entire lifec
 
 ---
 
+<img width="2816" height="1536" alt="to_upload" src="https://github.com/user-attachments/assets/1f8be5c4-3676-48b1-971e-2f9b3b05fa46" />
+
+
 ## 🔧 Technical Component Deep-Dive
 
 ### 1. Orchestration Layer (`stepfunctions.tf`)
